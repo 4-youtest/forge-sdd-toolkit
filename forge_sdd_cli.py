@@ -224,7 +224,7 @@ def get_toolkit_root() -> Path:
     """Get the root directory of the toolkit (where resource files are located)
     
     When running from source: returns the directory containing this file
-    When installed via pip/uv: searches for the actual repository root
+    When installed via pip/uv: searches for forge_sdd_toolkit_data directory
     """
     # Get directory of this module
     module_dir = Path(__file__).parent
@@ -233,22 +233,31 @@ def get_toolkit_root() -> Path:
     if (module_dir / ".github").exists() and (module_dir / "prompts").exists():
         return module_dir
     
-    # If installed via pip/uv, files are in site-packages alongside this module
-    # The MANIFEST.in should have copied them there
+    # When installed via pip/uv with setuptools data-files,
+    # files are placed in forge_sdd_toolkit_data/ subdirectory
+    data_dir = module_dir / "forge_sdd_toolkit_data"
+    if data_dir.exists():
+        return data_dir
+    
+    # If installed via pip/uv with MANIFEST.in, files might be alongside module
     if (module_dir / ".github").exists():
         return module_dir
         
     # Last resort: try to find the repo root by walking up
     current = module_dir
+    search_paths = [str(module_dir)]
     for _ in range(5):  # Don't go too far up
         if (current / ".github").exists() and (current / "prompts").exists():
             return current
+        if (current / "forge_sdd_toolkit_data").exists():
+            return current / "forge_sdd_toolkit_data"
+        search_paths.append(str(current))
         current = current.parent
     
     # If nothing found, return module dir and let the error happen downstream
     console.print(f"[yellow]Warning: Could not find toolkit resources. Searched in:[/yellow]")
-    console.print(f"  - {module_dir}")
-    console.print(f"  - Parent directories up to {current}")
+    for path in search_paths:
+        console.print(f"  - {path}")
     return module_dir
 
 

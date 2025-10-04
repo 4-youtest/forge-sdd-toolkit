@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "forge-sdd-toolkit"
-version = "1.0.2"
+version = "1.0.3"
 description = "Toolkit para desenvolvimento orientado por especificações em Atlassian Forge"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -52,3 +52,9 @@ forge-sdd = "forge_sdd_cli:main"
 [tool.setuptools]
 py-modules = ["forge_sdd_cli"]
 include-package-data = true
+
+[tool.setuptools.data-files]
+"forge_sdd_toolkit_data/.github" = [".github/copilot-instructions.md"]
+"forge_sdd_toolkit_data/.github/prompts" = ["prompts/*.prompt.md"]
+"forge_sdd_toolkit_data/scripts/bash" = ["scripts/bash/*"]
+"forge_sdd_toolkit_data/templates" = ["templates/*.md"]
