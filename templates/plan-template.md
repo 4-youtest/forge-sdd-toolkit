@@ -93,24 +93,25 @@ app:
 
 ### [Nome do Módulo 1]
 
-**Arquivo**: `src/modules/[nome]/ui.jsx` (UI Kit)
+**Arquivo**: `src/modules/[nome]/ui.jsx` (UI Kit 2 - @forge/react)
 ```jsx
-import ForgeUI, { render, IssuePanel, Text, useState } from '@forge/ui';
-import api, { route } from '@forge/api';
+import ForgeReconciler from '@forge/react';
+import { Box, Text, Button, useProductContext } from '@forge/react';
+import { invoke } from '@forge/bridge';
 
 const Panel = () => {
-  const [data, setData] = useState(null);
-
-  // Implementação
+  // Usar invoke() para chamar resolvers se necessário
+  // const response = await invoke('resolver-key', { params });
 
   return (
-    <IssuePanel>
+    <Box padding="space.200">
       <Text>Example content</Text>
-    </IssuePanel>
+      <Button text="Click me" />
+    </Box>
   );
 };
 
-export const run = render(<Panel />);
+ForgeReconciler.render(<Panel />);
 ```
 
 **Arquivo**: `src/modules/[nome]/resolver.js`

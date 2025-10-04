@@ -18,7 +18,7 @@ FEATURE_BRANCH="${ARGS[*]}"
 find_repo_root() {
     local dir="$1"
     while [ "$dir" != "/" ]; do
-        if [ -d "$dir/.git" ] || [ -f "$dir/manifest.yml" ] || [ -d "$dir/forge-specs" ]; then
+        if [ -d "$dir/.git" ] || [ -f "$dir/manifest.yml" ] || [ -d "$dir/forge-sdd/specs" ]; then
             echo "$dir"
             return 0
         fi
@@ -54,7 +54,7 @@ if [ -z "$FEATURE_BRANCH" ]; then
     fi
 fi
 
-SPECS_DIR="$REPO_ROOT/forge-specs"
+SPECS_DIR="$REPO_ROOT/forge-sdd/specs"
 FEATURE_DIR="$SPECS_DIR/$FEATURE_BRANCH"
 
 if [ ! -d "$FEATURE_DIR" ]; then
@@ -69,7 +69,7 @@ if [ ! -f "$SPEC_FILE" ]; then
 fi
 
 PLAN_FILE="$FEATURE_DIR/implementation-plan.md"
-TEMPLATE="$REPO_ROOT/templates/plan-template.md"
+TEMPLATE="$REPO_ROOT/forge-sdd/templates/plan-template.md"
 
 if [ -f "$TEMPLATE" ]; then
     cp "$TEMPLATE" "$PLAN_FILE"

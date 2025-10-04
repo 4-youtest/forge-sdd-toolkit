@@ -184,7 +184,7 @@ const response = await api.asApp().requestJira(route`/rest/api/3/project`);
 
 ### Mais Documentação
 
-- 📖 [Regras Completas](templates/forge-rules.md) - Todas as regras do Forge
+- 📖 [Manifest Structures & Templates](templates/manifest-structures.md) - Estruturas obrigatórias e catálogo de templates
 - 🔧 [Opções de Integração](INTEGRATION-OPTIONS.md) - Como integrar o toolkit
 - 💻 [Guia de Instalação](INSTALL.md) - Instalação detalhada
 - 🆘 [Troubleshooting](TROUBLESHOOTING.md) - **Erros comuns e soluções** ⭐

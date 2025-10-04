@@ -1,7 +1,19 @@
 ---
 description: Criar ou atualizar a especificação de funcionalidade a partir de uma descrição em linguagem natural.
 scripts:
-  sh: scripts/bash/create-new-feature.sh --json "{ARGS}"
+  sh: forge-sdd/scripts/bash/create-new-feature.sh --json "{ARGS}"
+---
+
+## 📚 Contexto Necessário
+
+**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
+
+1. 📄 **`forge-sdd/templates/ideate-template.md`** - Estrutura obrigatória da especificação de funcionalidade
+2. 📄 **`forge-sdd/templates/manifest-structures.md`** - Referência de módulos Forge e templates disponíveis
+3. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
+
+Aguarde o carregamento completo destes arquivos antes de prosseguir com as instruções abaixo.
+
 ---
 
 A entrada do usuário para você pode ser fornecida diretamente pelo agente ou como um argumento de comando — você **DEVE** considerá-la antes de prosseguir com o prompt (se não estiver vazia).
@@ -16,7 +28,7 @@ Dada essa descrição de funcionalidade, faça o seguinte:
 
 1. Execute o script `{SCRIPT}` a partir da raiz do repositório e analise seu JSON de saída para obter BRANCH_NAME, SPEC_FILE e MANIFEST_NOTES. Todos os caminhos de arquivo devem ser absolutos.
   **IMPORTANTE** Você deve executar esse script apenas uma única vez. O JSON é fornecido no terminal como saída — consulte-o sempre para obter o conteúdo exato que você procura.
-2. Carregue `templates/ideate-template.md` para entender as seções obrigatórias e a estrutura específica do Atlassian Forge.
+2. Use o conteúdo de `ideate-template.md` (já carregado acima) para entender as seções obrigatórias e a estrutura específica do Atlassian Forge.
 3. Escreva a especificação em SPEC_FILE usando a estrutura do template, com atenção especial para:
    - **Contexto Atlassian Forge**: Identifique produto alvo, módulos, permissões e limitações
    - **Módulos Forge**: Marque quais módulos (jira:issuePanel, function, trigger, etc.) são necessários
@@ -51,7 +63,6 @@ Dada essa descrição de funcionalidade, faça o seguinte:
    Após a escolha, especifique no arquivo de spec:
    - **UI Kit 2**: Template `jira-issue-panel-ui-kit`, `confluence-global-page-ui-kit`, etc.
    - **Custom UI**: Template `jira-issue-panel-custom-ui`, `confluence-global-page-custom-ui`, etc.
-   - ❌ NUNCA especifique UI Kit 1 (`@forge/ui`) - DEPRECIADO!
 
 6. Informe a conclusão com:
    - Nome da branch
@@ -63,7 +74,7 @@ Dada essa descrição de funcionalidade, faça o seguinte:
 - O script cria e faz checkout da nova branch automaticamente
 - Dois arquivos são criados: feature-spec.md (especificação) e manifest-updates.md (configurações)
 - Sempre considere as limitações da plataforma Forge ao especificar requisitos
-- **Se UI for necessária, SEMPRE especifique UI Kit 2 ou Custom UI** (nunca UI Kit 1)
+- **Se UI for necessária, especifique claramente UI Kit 2 ou Custom UI**
 
 ---
 

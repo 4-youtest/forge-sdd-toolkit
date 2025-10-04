@@ -2,6 +2,22 @@
 description: Testar funcionalidade implementada em Atlassian Forge
 ---
 
+## 📚 Contexto Necessário
+
+**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
+
+1. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
+
+**Identifique a feature atual e carregue:**
+
+2. 📄 **`forge-sdd/specs/[feature]/implementation-plan.md`** - Plano técnico para validar implementação
+3. 📄 **`forge-sdd/specs/[feature]/feature-spec.md`** - Especificação para validar critérios de aceite
+4. 📄 **`manifest.yml`** - Configuração do app para validar módulos e permissões
+
+Aguarde o carregamento completo antes de prosseguir.
+
+---
+
 A entrada do usuário pode especificar a feature ou módulos específicos para testar.
 
 Entrada do usuário:
@@ -73,7 +89,7 @@ forge deploy --environment staging
 ```
 
 **Relatório de Testes**:
-Ao final, crie um sumário em `forge-specs/[feature]/test-results.md`:
+Ao final, crie um sumário em `forge-sdd/specs/[feature]/test-results.md`:
 - Testes executados
 - Resultados (pass/fail)
 - Issues encontrados

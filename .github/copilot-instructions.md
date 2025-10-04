@@ -138,19 +138,14 @@ const response = await api.asUser().requestJira(
 
 #### ⚠️ CRITICAL: UI Kit Versions
 
-**Forge tem 2 versões de UI Kit:**
-
-1. **UI Kit 1** (`@forge/ui`) - ❌ **DEPRECIADO desde Fev 28, 2025 - NUNCA USE!**
-2. **UI Kit 2** (`@forge/react`) - ✅ **USE SEMPRE!**
+**Forge UI Kit 2** (`@forge/react`) é a ÚNICA versão suportada.
 
 **Templates corretos para criar apps:**
 ```bash
 # ✅ CORRETO - Templates UI Kit 2
 forge create -t jira-issue-panel-ui-kit my-app
 forge create -t confluence-global-page-ui-kit my-app
-
-# ❌ ERRADO - Templates antigos (geram UI Kit 1)
-# Não use templates sem sufixo ou que gerem @forge/ui
+forge create -t jira-global-page-ui-kit my-app
 ```
 
 #### Para UI Kit 2 (@forge/react) - USE SEMPRE:
@@ -171,13 +166,6 @@ const App = () => {
 };
 
 ForgeReconciler.render(<App />);
-
-// ❌ ERRADO - UI Kit 1 DEPRECIADO (causa erro de build!)
-import ForgeUI, { Text, render } from '@forge/ui';
-
-render(
-  <Text>Hello</Text>
-);
 
 // ❌ ERRADO - NÃO usar React padrão em UI Kit
 import React from 'react';
@@ -478,7 +466,7 @@ forge logs -e development     # Ver logs
 
 ## 🚨 Regras Críticas
 
-1. **NUNCA** use `@forge/ui` (obsoleto) - use `@forge/react`
+1. **SEMPRE** use `@forge/react` para UI Kit (única versão suportada)
 2. **NUNCA** importe React padrão em projetos UI Kit
 3. **NUNCA** use inline styles em Custom UI (CSP)
 4. **NUNCA** use `--no-verify` em deploy

@@ -2,6 +2,10 @@
 
 Soluções para erros comuns durante o desenvolvimento com Atlassian Forge.
 
+> **⚠️ Nota:** Este documento menciona UI Kit 1 (`@forge/ui`) **apenas para solução de erros em apps legados**. Para novos projetos, use **sempre UI Kit 2** (`@forge/react`).
+
+---
+
 ## 🔴 Erro: "deprecated UI Kit 1 modules"
 
 ### Erro Completo

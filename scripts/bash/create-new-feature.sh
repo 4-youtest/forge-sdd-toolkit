@@ -22,7 +22,7 @@ fi
 find_repo_root() {
     local dir="$1"
     while [ "$dir" != "/" ]; do
-        if [ -d "$dir/.git" ] || [ -f "$dir/manifest.yml" ] || [ -d "$dir/forge-specs" ]; then
+        if [ -d "$dir/.git" ] || [ -f "$dir/manifest.yml" ] || [ -d "$dir/forge-sdd/specs" ]; then
             echo "$dir"
             return 0
         fi
@@ -50,7 +50,7 @@ fi
 
 cd "$REPO_ROOT"
 
-SPECS_DIR="$REPO_ROOT/forge-specs"
+SPECS_DIR="$REPO_ROOT/forge-sdd/specs"
 mkdir -p "$SPECS_DIR"
 
 HIGHEST=0
@@ -80,7 +80,7 @@ fi
 FEATURE_DIR="$SPECS_DIR/$BRANCH_NAME"
 mkdir -p "$FEATURE_DIR"
 
-TEMPLATE="$REPO_ROOT/templates/ideate-template.md"
+TEMPLATE="$REPO_ROOT/forge-sdd/templates/ideate-template.md"
 SPEC_FILE="$FEATURE_DIR/feature-spec.md"
 if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$SPEC_FILE"; else touch "$SPEC_FILE"; fi
 

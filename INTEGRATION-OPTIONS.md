@@ -36,13 +36,14 @@
 ### 📋 Opção 2: Referência Manual nos Prompts
 
 **Arquivos:**
-- `templates/forge-rules.md` (já existe)
+- `templates/manifest-structures.md` (contém estruturas + templates)
+- `.github/copilot-instructions.md` (regras técnicas detalhadas)
 - Cada prompt referencia explicitamente
 
 **Como funciona:**
-- Cada arquivo `.prompt.md` inclui uma instrução:
+- Cada arquivo `.prompt.md` referencia documentos específicos:
   ```markdown
-  Antes de começar, leia as regras gerais em `templates/forge-rules.md`
+  Consulte `templates/manifest-structures.md` para estruturas e templates
   ```
 
 **Vantagens:**
@@ -65,8 +66,9 @@
 ### 🔄 Opção 3: Híbrida (RECOMENDADA) ⭐
 
 **Combinação:**
-1. `.github/copilot-instructions.md` - Para desenvolvimento diário
-2. `templates/forge-rules.md` - Para referência em prompts específicos
+1. `.github/copilot-instructions.md` - Regras técnicas aplicadas automaticamente
+2. `templates/manifest-structures.md` - Estruturas obrigatórias + catálogo de templates
+3. Prompts específicos - Regras de cada fase
 
 **Estrutura atual:**
 ```
@@ -74,7 +76,7 @@ forge-sdd-toolkit/
 ├── .github/
 │   └── copilot-instructions.md     # ← Copilot aplica automaticamente
 ├── templates/
-│   └── forge-rules.md              # ← Referência para outros agentes
+│   └── manifest-structures.md      # ← Referência para estruturas/templates
 └── prompts/
     ├── forge-ideate.prompt.md      # ← Regras específicas da fase
     ├── forge-plan.prompt.md
@@ -85,7 +87,7 @@ forge-sdd-toolkit/
 **Como funciona:**
 - **GitHub Copilot:** Usa `.github/copilot-instructions.md` automaticamente
 - **Slash commands:** Prompts `.prompt.md` já têm regras específicas da fase
-- **Outros agentes:** Podem ler `templates/forge-rules.md` se necessário
+- **Referência técnica:** `manifest-structures.md` consultado quando necessário
 
 **Vantagens:**
 - ✅ Melhor de ambos os mundos
@@ -118,14 +120,14 @@ forge-sdd-toolkit/
 ## 🔧 Configuração Atual do Projeto
 
 **Já implementado:**
-- ✅ `.github/copilot-instructions.md` - Regras automáticas do Copilot
-- ✅ `templates/forge-rules.md` - Referência completa
+- ✅ `.github/copilot-instructions.md` - Regras automáticas do Copilot (técnicas detalhadas)
+- ✅ `templates/manifest-structures.md` - Estruturas obrigatórias + catálogo de templates
 - ✅ `prompts/*.prompt.md` - Regras específicas por fase
 
 **Funciona com:**
 - ✅ GitHub Copilot (autocomplete e chat)
 - ✅ Slash commands personalizados (via `.prompt.md`)
-- ✅ Outros agentes IA (via `forge-rules.md`)
+- ✅ Referência técnica (via `manifest-structures.md`)
 
 ---
 
@@ -196,15 +198,19 @@ ln -s ../prompts/forge-ideate.prompt.md .github/forge-ideate.prompt.md
 
 ## 🎓 Resumo
 
-**Pergunta:** "Como o arquivo forge-rules será referenciado?"
+**Pergunta:** "Como as regras serão aplicadas?"
 
 **Resposta:**
-1. **Via GitHub Copilot:** `.github/copilot-instructions.md` é aplicado **automaticamente**
+1. **Via GitHub Copilot:** `.github/copilot-instructions.md` é aplicado **automaticamente** (regras técnicas detalhadas)
 2. **Via prompts:** Cada `.prompt.md` tem suas próprias regras (já distribuídas por fase)
-3. **Via referência:** `templates/forge-rules.md` pode ser lido por qualquer agente IA
+3. **Via referência:** `templates/manifest-structures.md` consultado para estruturas e templates
 
-**Pergunta:** "Funcionaria como copilot-instructions?"
+**Pergunta:** "Onde estão as regras?"
 
-**Resposta:** ✅ **SIM!** Já criei `.github/copilot-instructions.md` com versão otimizada das regras. GitHub Copilot aplicará automaticamente em todo código que você escrever.
+**Resposta:** 
+- ✅ **Regras técnicas:** `.github/copilot-instructions.md` (aplicadas automaticamente)
+- ✅ **Estruturas:** `templates/manifest-structures.md` (consultado quando necessário)
+- ✅ **Regras de fase:** Cada `prompts/*.prompt.md` (específico por etapa)
+
 
 **Status:** 🎉 **Implementado e funcionando!**

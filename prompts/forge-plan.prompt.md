@@ -1,7 +1,23 @@
 ---
 description: Transformar especificação de funcionalidade em plano técnico de implementação para Atlassian Forge
 scripts:
-  sh: scripts/bash/create-implementation-plan.sh --json "{ARGS}"
+  sh: forge-sdd/scripts/bash/create-implementation-plan.sh --json "{ARGS}"
+---
+
+## 📚 Contexto Necessário
+
+**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
+
+1. 📄 **`forge-sdd/templates/plan-template.md`** - Estrutura obrigatória do plano técnico
+2. 📄 **`forge-sdd/templates/manifest-structures.md`** - Estruturas obrigatórias do manifest.yml e catálogo de templates
+3. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
+
+**Após executar o script (passo 1), carregue também:**
+
+4. 📄 **Feature spec** (path retornado pelo script) - Requisitos da funcionalidade
+
+Aguarde o carregamento completo antes de prosseguir.
+
 ---
 
 A entrada do usuário para você pode ser fornecida diretamente pelo agente ou como um argumento de comando — você **DEVE** considerá-la antes de prosseguir com o prompt (se não estiver vazia).
@@ -16,8 +32,8 @@ Dada essa solicitação, faça o seguinte:
 
 1. Execute o script `{SCRIPT}` para obter BRANCH_NAME, SPEC_FILE e PLAN_FILE. O script identificará a feature atual.
   **IMPORTANTE** Execute esse script apenas uma única vez. O JSON é fornecido no terminal como saída.
-2. Carregue SPEC_FILE para entender os requisitos da funcionalidade
-3. Carregue `templates/plan-template.md` para entender a estrutura do plano técnico
+2. Use o conteúdo de SPEC_FILE (carregue agora se ainda não carregou) para entender os requisitos da funcionalidade
+3. Use o conteúdo de `plan-template.md` (já carregado acima) para entender a estrutura do plano técnico
 4. Crie o plano técnico em PLAN_FILE, incluindo:
    - **Arquitetura Forge**: Estrutura de diretórios, módulos, funções
    - **Implementação de Módulos**: Código específico para cada módulo Forge
@@ -66,10 +82,6 @@ jira-global-page-ui-kit
 confluence-global-page-ui-kit
 confluence-macro-ui-kit
 ```
-
-**❌ NUNCA use:**
-- Templates antigos sem sufixo `-ui-kit`
-- UI Kit 1 (`@forge/ui`) - DEPRECIADO desde 28/Fev/2025
 
 **Custom UI** - Recomendado para:
 - Projetos complexos com UI altamente customizada
@@ -373,4 +385,4 @@ export const run = resolver.getDefinitions();  // UI Kit 2
 - [ ] `resources` section define path correto
 - [ ] Backend exporta `resolver.getDefinitions()`
 
-**Consulte:** `templates/manifest-structures.md` para estruturas completas e exemplos
+**Consulte:** `forge-sdd/templates/manifest-structures.md` para estruturas completas e exemplos

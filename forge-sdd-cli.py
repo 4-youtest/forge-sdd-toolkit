@@ -284,16 +284,23 @@ def copy_toolkit_structure(project_path: Path, tracker: Optional[StepTracker] = 
             shutil.copy2(prompt_file, dest_file)
             stats["files"] += 1
 
-    # Copy other directories
+    # Copy other directories INTO forge-sdd/ to centralize toolkit
+    # Note: prompts/ are already copied to .github/prompts/ above (GitHub Copilot integration)
+    # No need to duplicate them in project root
+    
+    # Create forge-sdd/ directory
+    forge_sdd_dir = project_path / "forge-sdd"
+    forge_sdd_dir.mkdir(exist_ok=True)
+    stats["dirs"] += 1
+    
     other_dirs = [
         ("scripts", "scripts"),
         ("templates", "templates"),
-        ("prompts", "prompts"),  # Keep backup copy in root
     ]
 
     for source_name, dest_name in other_dirs:
         source = toolkit_root / source_name
-        dest = project_path / dest_name
+        dest = forge_sdd_dir / dest_name  # Now inside forge-sdd/
 
         if source.exists():
             if dest.exists():
@@ -306,9 +313,9 @@ def copy_toolkit_structure(project_path: Path, tracker: Optional[StepTracker] = 
 
 
 def create_forge_specs_dir(project_path: Path) -> None:
-    """Create forge-specs directory"""
-    specs_dir = project_path / "forge-specs"
-    specs_dir.mkdir(exist_ok=True)
+    """Create forge-sdd/specs/ directory for specifications"""
+    specs_dir = project_path / "forge-sdd" / "specs"
+    specs_dir.mkdir(parents=True, exist_ok=True)
     (specs_dir / ".gitkeep").touch()
 
 
@@ -329,7 +336,7 @@ Use os **slash commands** no GitHub Copilot Chat:
 /forge-ideate criar um painel lateral para exibir histórico de mudanças em issues
 ```
 
-**Output:** Cria especificação em `forge-specs/001-feature-name/`
+**Output:** Cria especificação em `forge-sdd/specs/001-feature-name/`
 
 #### 2. Criar Plano Técnico (PLAN)
 ```
@@ -358,10 +365,10 @@ Use os scripts bash diretamente:
 
 ```bash
 # Criar nova feature
-./scripts/bash/create-new-feature.sh "nome da funcionalidade"
+./forge-sdd/scripts/bash/create-new-feature.sh "nome da funcionalidade"
 
 # Criar plano de implementação
-./scripts/bash/create-implementation-plan.sh
+./forge-sdd/scripts/bash/create-implementation-plan.sh
 ```
 
 ## 📂 Estrutura de Diretórios
@@ -375,16 +382,23 @@ seu-projeto/
 │       ├── forge-plan.prompt.md
 │       ├── forge-implement.prompt.md
 │       └── forge-test.prompt.md
-├── forge-specs/                    # Especificações criadas
-│   └── ###-feature-name/
-│       ├── feature-spec.md
-│       ├── manifest-updates.md
-│       ├── implementation-plan.md
-│       └── test-results.md
-├── scripts/bash/                   # Scripts de automação
-├── templates/                      # Templates de documentos
-└── prompts/                        # Backup dos prompts (opcional)
+└── forge-sdd/                      # 🔧 TOOLKIT CENTRALIZADO
+    ├── specs/                      # Especificações criadas
+    │   └── ###-feature-name/
+    │       ├── feature-spec.md
+    │       ├── manifest-updates.md
+    │       ├── implementation-plan.md
+    │       └── test-results.md
+    ├── scripts/                    # Scripts de automação
+    │   └── bash/
+    │       ├── create-new-feature.sh
+    │       └── create-implementation-plan.sh
+    └── templates/                  # Templates de documentos
+        ├── ideate-template.md
+        └── plan-template.md
 ```
+
+**Nota:** Toda estrutura do toolkit está centralizada em `forge-sdd/` para não poluir o diretório raiz.
 
 ## 🔧 Comandos Úteis do Forge CLI
 
@@ -407,7 +421,7 @@ forge function invoke my-function --payload '{"key":"value"}'
 
 ## 📚 Documentação
 
-- **Regras completas:** `templates/forge-rules.md`
+- **Estruturas manifest.yml e templates:** `forge-sdd/templates/manifest-structures.md`
 - **GitHub Copilot Instructions:** `.github/copilot-instructions.md`
 - **Toolkit README:** Visite o repositório do toolkit
 
@@ -430,7 +444,7 @@ forge function invoke my-function --payload '{"key":"value"}'
 
 def make_scripts_executable(project_path: Path) -> None:
     """Make bash scripts executable"""
-    scripts_dir = project_path / "scripts" / "bash"
+    scripts_dir = project_path / "forge-sdd" / "scripts" / "bash"
     if scripts_dir.exists():
         for script in scripts_dir.glob("*.sh"):
             os.chmod(script, 0o755)
@@ -559,6 +573,35 @@ def init(
     # Final static tree
     console.print(tracker.render())
     console.print("\n[bold green]Toolkit installed successfully![/bold green]")
+
+    # Check for legacy structures from older versions
+    legacy_prompts = project_path / "prompts"
+    legacy_scripts = project_path / "scripts"
+    legacy_templates = project_path / "templates"
+    legacy_forge_specs = project_path / "forge-specs"
+    
+    has_legacy = any([
+        legacy_prompts.exists() and (project_path / ".github" / "prompts").exists(),
+        legacy_scripts.exists() and (project_path / "forge-sdd" / "scripts").exists(),
+        legacy_templates.exists() and (project_path / "forge-sdd" / "templates").exists(),
+        legacy_forge_specs.exists()
+    ])
+    
+    if has_legacy:
+        console.print()
+        console.print(
+            "[yellow]⚠️  Legacy Structure Detected[/yellow]\n"
+            "[yellow]   Found old toolkit files in project root. New structure uses 'forge-sdd/' directory.[/yellow]\n"
+            "[yellow]   You can safely remove these if desired:[/yellow]"
+        )
+        if legacy_prompts.exists():
+            console.print("[yellow]   • prompts/ (now in .github/prompts/)[/yellow]")
+        if legacy_scripts.exists():
+            console.print("[yellow]   • scripts/ (now in forge-sdd/scripts/)[/yellow]")
+        if legacy_templates.exists():
+            console.print("[yellow]   • templates/ (now in forge-sdd/templates/)[/yellow]")
+        if legacy_forge_specs.exists():
+            console.print("[yellow]   • forge-specs/ (now in forge-sdd/specs/)[/yellow]")
 
     # Next steps
     steps_lines = [

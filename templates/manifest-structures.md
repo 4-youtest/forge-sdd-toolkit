@@ -364,4 +364,78 @@ resources:
 
 ---
 
+## 7. Catálogo Completo de Templates Forge
+
+Lista completa de todos os templates disponíveis via `forge create`:
+
+### Rovo
+- `action-rovo`
+- `rovo-agent-rovo`
+
+### Confluence
+- `confluence-content-action-ui-kit` / `confluence-content-action-custom-ui`
+- `confluence-content-byline-ui-kit` / `confluence-content-byline-custom-ui`
+- `confluence-context-menu-ui-kit` / `confluence-context-menu-custom-ui`
+- `confluence-global-page-ui-kit` / `confluence-global-page-custom-ui`
+- `confluence-global-settings-ui-kit` / `confluence-global-settings-custom-ui`
+- `confluence-homepage-feed-ui-kit` / `confluence-homepage-feed-custom-ui`
+- `confluence-macro-ui-kit` / `confluence-macro-custom-ui`
+- `confluence-macro-with-custom-configuration-ui-kit` / `confluence-macro-with-custom-configuration-custom-ui`
+- `confluence-space-page-ui-kit` / `confluence-space-page-custom-ui`
+- `confluence-space-settings-ui-kit` / `confluence-space-settings-custom-ui`
+
+### Jira
+- `jira-admin-page-ui-kit` / `jira-admin-page-custom-ui`
+- `jira-backlog-action-ui-kit` / `jira-backlog-action-custom-ui`
+- `jira-board-action-ui-kit` / `jira-board-action-custom-ui`
+- `jira-command-ui-kit` / `jira-command-custom-ui`
+- `jira-custom-field-type-ui-kit` / `jira-custom-field-type-custom-ui`
+- `jira-custom-field-ui-kit` / `jira-custom-field-custom-ui`
+- `jira-dashboard-background-script-ui-kit` / `jira-dashboard-background-script-custom-ui`
+- `jira-dashboard-gadget-ui-kit` / `jira-dashboard-gadget-custom-ui`
+- `jira-entity-property`
+- `jira-global-page-ui-kit` / `jira-global-page-custom-ui`
+- `jira-global-permission`
+- `jira-issue-action-ui-kit` / `jira-issue-action-custom-ui`
+- `jira-issue-activity-ui-kit` / `jira-issue-activity-custom-ui`
+- `jira-issue-context-ui-kit` / `jira-issue-context-custom-ui`
+- `jira-issue-glance-ui-kit` / `jira-issue-glance-custom-ui`
+- `jira-issue-navigator-action-ui-kit` / `jira-issue-navigator-action-custom-ui`
+- `jira-issue-panel-ui-kit` / `jira-issue-panel-custom-ui`
+- `jira-issue-view-background-script-ui-kit` / `jira-issue-view-background-script-custom-ui`
+- `jira-jql-function`
+- `jira-personal-settings-page-ui-kit` / `jira-personal-settings-page-custom-ui`
+- `jira-project-page-ui-kit` / `jira-project-page-custom-ui`
+- `jira-project-permission`
+- `jira-project-settings-page-ui-kit` / `jira-project-settings-page-custom-ui`
+
+### Jira Service Management
+- `jira-service-management-assets-import-type-ui-kit` / `jira-service-management-assets-import-type-custom-ui`
+- `jira-service-management-organization-panel-ui-kit` / `jira-service-management-organization-panel-custom-ui`
+- `jira-service-management-portal-footer-ui-kit` / `jira-service-management-portal-footer-custom-ui`
+- `jira-service-management-portal-header-ui-kit` / `jira-service-management-portal-header-custom-ui`
+- `jira-service-management-portal-profile-panel-ui-kit` / `jira-service-management-portal-profile-panel-custom-ui`
+- `jira-service-management-portal-request-create-property-panel-ui-kit` / `jira-service-management-portal-request-create-property-panel-custom-ui`
+- `jira-service-management-portal-request-detail-panel-ui-kit` / `jira-service-management-portal-request-detail-panel-custom-ui`
+- `jira-service-management-portal-request-detail-ui-kit` / `jira-service-management-portal-request-detail-custom-ui`
+- `jira-service-management-portal-request-view-action-ui-kit` / `jira-service-management-portal-request-view-action-custom-ui`
+- `jira-service-management-portal-subheader-ui-kit` / `jira-service-management-portal-subheader-custom-ui`
+- `jira-service-management-portal-user-menu-action-ui-kit` / `jira-service-management-portal-user-menu-action-custom-ui`
+- `jira-service-management-queue-page-ui-kit` / `jira-service-management-queue-page-custom-ui`
+
+### Jira Workflow
+- `jira-sprint-action-ui-kit` / `jira-sprint-action-custom-ui`
+- `jira-time-tracking-provider`
+- `jira-workflow-condition`
+- `jira-workflow-postfunction`
+- `jira-workflow-validator`
+
+### Triggers & Functions
+- `product-trigger`
+- `scheduled-trigger`
+- `webtrigger`
+
+---
+
 **Resumo:** O Forge usa o `resolver` para identificar e conectar módulos UI, mesmo que não haja lógica backend customizada. **NUNCA remova componentes obrigatórios do manifest!**
+

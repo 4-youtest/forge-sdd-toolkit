@@ -2,6 +2,23 @@
 description: Implementar funcionalidade seguindo o plano técnico para Atlassian Forge
 ---
 
+## 📚 Contexto Necessário
+
+**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
+
+1. 📄 **`forge-sdd/templates/manifest-structures.md`** - Estruturas obrigatórias do manifest.yml e templates
+2. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
+
+**Após identificar a feature atual, carregue também:**
+
+3. 📄 **`forge-sdd/specs/[feature]/implementation-plan.md`** - Plano técnico detalhado
+4. 📄 **`forge-sdd/specs/[feature]/feature-spec.md`** - Especificação original (contexto)
+5. 📄 **`forge-sdd/specs/[feature]/manifest-updates.md`** - Atualizações necessárias no manifest
+
+Aguarde o carregamento completo antes de prosseguir.
+
+---
+
 A entrada do usuário pode incluir contexto adicional ou módulos específicos para implementar.
 
 Entrada do usuário:
@@ -30,12 +47,12 @@ Se o diretório atual já tem `manifest.yml`, pule para o passo 3.
 2. **Se NÃO existir, executar script de criação:**
 
    a) **Determine o template correto baseado no plano técnico:**
-      - Leia `forge-specs/[feature]/implementation-plan.md` para identificar o template recomendado
+      - Leia `forge-sdd/specs/[feature]/implementation-plan.md` para identificar o template recomendado
       - Ou pergunte ao usuário qual template usar se não estiver claro
 
    b) **Execute o script de criação:**
       ```bash
-      scripts/bash/create-forge-app.sh --template <template-from-plan> --name <app-name> --json
+      forge-sdd/scripts/bash/create-forge-app.sh --template <template-from-plan> --name <app-name> --json
       ```
 
       **Templates disponíveis:**
@@ -75,7 +92,7 @@ Se o diretório atual já tem `manifest.yml`, pule para o passo 3.
    **Alternativa (modo interativo):**
    Se preferir deixar o usuário escolher o template manualmente:
    ```bash
-   scripts/bash/create-forge-app.sh
+   forge-sdd/scripts/bash/create-forge-app.sh
    ```
    Este modo apresenta menus interativos para seleção de categoria e template.
 
@@ -88,9 +105,9 @@ Para implementar, faça o seguinte:
    - Verificar estrutura básica Forge (`src/`, `package.json`)
 
 2. **Carregar documentação:**
-   - `forge-specs/[feature]/implementation-plan.md` - Plano técnico
-   - `forge-specs/[feature]/feature-spec.md` - Especificação original
-   - `forge-specs/[feature]/manifest-updates.md` - Atualizações do manifest
+   - `forge-sdd/specs/[feature]/implementation-plan.md` - Plano técnico
+   - `forge-sdd/specs/[feature]/feature-spec.md` - Especificação original
+   - `forge-sdd/specs/[feature]/manifest-updates.md` - Atualizações do manifest
 
 3. **Trabalhar COM a estrutura existente** (NÃO recriar):
    - O template já criou `src/index.js` ou `src/index.jsx`
@@ -119,7 +136,7 @@ Para implementar, faça o seguinte:
 
 **Observações**:
 - Sempre considere as limitações do Forge (timeouts, storage, runtime)
-- Use as APIs do Forge apropriadas (`@forge/api`, `@forge/ui`)
+- Use as APIs do Forge apropriadas (`@forge/api`, `@forge/react`, `@forge/bridge`)
 - Implemente código defensivo (validação de inputs, tratamento de erros)
 - Adicione comentários explicando decisões técnicas
 - Teste localmente com `forge tunnel` quando possível
@@ -164,7 +181,7 @@ ls -la <app-name>
 forge create -t <template-name> <app-name>
 ```
 
-**Templates disponíveis:** Ver lista completa em `templates/forge-rules.md`
+**Templates disponíveis:** Ver lista completa em `forge-sdd/templates/manifest-structures.md` (Seção 7)
 
 ✅ **SEMPRE** use um template da lista oficial
 ❌ **NUNCA** use template vazio ou genérico
@@ -220,18 +237,14 @@ const data = await response.json();
 
 ### Imports & Bibliotecas
 
-#### ⚠️ ATENÇÃO CRÍTICA: Versões do UI Kit
+#### ⚠️ CRÍTICO: USE APENAS UI Kit 2
 
-**Forge possui 2 versões de UI Kit - USE APENAS A VERSÃO 2!**
+**Forge UI Kit 2** (`@forge/react`) é a versão atual e única suportada.
 
-1. **UI Kit 1** (`@forge/ui`) - ❌ **DEPRECIADO desde 28/Fev/2025**
-   - Causa erro: "Your app is currently using deprecated UI Kit 1 modules"
-   - Causa erro JSX: "Support for the experimental syntax 'jsx' isn't currently enabled"
-   - **NUNCA USE!**
-
-2. **UI Kit 2** (`@forge/react`) - ✅ **VERSÃO ATUAL - USE SEMPRE!**
-   - Templates corretos terminam com `-ui-kit`
-   - Exemplo: `jira-issue-panel-ui-kit`, `confluence-global-page-ui-kit`
+**Templates corretos** terminam com `-ui-kit`:
+- `jira-issue-panel-ui-kit`
+- `confluence-global-page-ui-kit`
+- `jira-global-page-ui-kit`
 
 #### Para Projetos com UI Kit 2 (SEMPRE USE)
 
@@ -256,14 +269,6 @@ const App = () => {
 ForgeReconciler.render(<App />);
 ```
 
-**❌ ERRADO - UI Kit 1 DEPRECIADO (causará erro de build!):**
-```javascript
-// NÃO USE - Causa "deprecated UI Kit 1" warning e erro JSX
-import ForgeUI, { Text, render } from '@forge/ui';
-
-render(<Text>Hello</Text>);
-```
-
 **❌ ERRADO - React padrão em UI Kit:**
 ```javascript
 // NÃO USE - Causa erro "jsx isn't currently enabled"
@@ -274,7 +279,6 @@ import { Button } from 'react-bootstrap';
 **Regra de Ouro para UI Kit:**
 - ✅ SEMPRE use `import ... from '@forge/react'`
 - ✅ SEMPRE use `ForgeReconciler.render(<App />)`
-- ❌ NUNCA use `@forge/ui` (depreciado)
 - ❌ NUNCA use `import React from 'react'` em UI Kit
 
 #### Para Projetos com Custom UI
@@ -359,7 +363,7 @@ const resolver = new Resolver();
 export const run = resolver.getDefinitions();  // OBRIGATÓRIO!
 ```
 
-**Consulte:** `templates/manifest-structures.md` para estruturas completas
+**Consulte:** `forge-sdd/templates/manifest-structures.md` para estruturas completas
 
 #### Ao Atualizar o Manifest
 

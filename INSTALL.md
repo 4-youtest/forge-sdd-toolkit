@@ -109,19 +109,18 @@ forge-sdd init --here --force
 ```
 
 **O que faz:**
-1. ✅ Verifica se é projeto Forge (`manifest.yml`)
+1. ✅ Verifica se é projeto Forge (`manifest.yml`) - não obrigatório
 2. ✅ Copia estrutura do toolkit:
    - `.github/copilot-instructions.md`
    - `.github/prompts/` (slash commands)
-   - `scripts/`, `templates/`, `prompts/` (backup)
-3. ✅ Cria diretório `forge-specs/`
-4. ✅ Cria guia de uso `README-FORGE-SDD.md`
-5. ✅ Torna scripts bash executáveis
-6. ✅ Inicializa git (se necessário)
+   - `forge-sdd/scripts/`, `forge-sdd/templates/`, `forge-sdd/specs/`
+3. ✅ Cria guia de uso `README-FORGE-SDD.md`
+4. ✅ Torna scripts bash executáveis
+5. ✅ Inicializa git (se necessário)
 
 **Estrutura criada:**
 ```
-seu-projeto-forge/
+seu-projeto/
 ├── .github/
 │   ├── copilot-instructions.md
 │   └── prompts/              # ← Slash commands aqui!
@@ -129,11 +128,13 @@ seu-projeto-forge/
 │       ├── forge-plan.prompt.md
 │       ├── forge-implement.prompt.md
 │       └── forge-test.prompt.md
-├── forge-specs/
-├── scripts/bash/
-├── templates/
-└── prompts/                  # Backup
+└── forge-sdd/                # ← Toolkit centralizado
+    ├── specs/                # Especificações criadas
+    ├── scripts/bash/         # Scripts de automação
+    └── templates/            # Templates de documentos
 ```
+
+**Nota:** O toolkit funciona tanto ANTES quanto DEPOIS de criar o app Forge!
 
 ### `forge-sdd check`
 
@@ -259,9 +260,10 @@ chmod +x scripts/bash/*.sh
 Após instalar o toolkit:
 
 1. 📖 Leia `README-FORGE-SDD.md` no projeto
-2. 🎯 Leia `templates/forge-rules.md` para regras completas
-3. 💬 Abra GitHub Copilot Chat e digite `/forge-ideate`
-4. 🚀 Comece a desenvolver com SDD!
+2. 🎯 Consulte `.github/copilot-instructions.md` para regras automáticas
+3. 📋 Veja `forge-sdd/templates/manifest-structures.md` para estruturas e templates
+4. 💬 Abra GitHub Copilot Chat e digite `/forge-ideate`
+5. 🚀 Comece a desenvolver com SDD!
 
 ## 🔗 Links Úteis
 
