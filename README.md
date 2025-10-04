@@ -1,4 +1,4 @@
-# Forge SDD Toolkit 🚀
+# Forge SDD Toolkit
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
@@ -11,34 +11,34 @@ Toolkit que integra **GitHub Copilot** ao desenvolvimento de apps Forge, aplican
 
 ---
 
-## ✨ O que é?
+## O que é?
 
 Um conjunto de ferramentas que adiciona ao **GitHub Copilot** conhecimento especializado sobre Atlassian Forge:
 
-- 🎯 **Slash commands personalizados** - `/forge-ideate`, `/forge-plan`, `/forge-implement`, `/forge-test`
-- 🤖 **IA com contexto** - Copilot conhece limitações do Forge (timeout 25s, storage 100MB, CSP)
-- 🔒 **Segurança automática** - Previne anti-patterns (inline styles, escopos desnecessários)
-- 📝 **Workflow estruturado** - Especificação → Planejamento → Implementação → Testes
-- ⚡ **Geração de código correta** - Sempre usa `@forge/react` (UI Kit 2), nunca React padrão
+- **Slash commands personalizados** - `/forge-ideate`, `/forge-plan`, `/forge-implement`, `/forge-test`
+- **IA com contexto** - Copilot conhece limitações do Forge (timeout 25s, storage 100MB, CSP)
+- **Segurança automática** - Previne anti-patterns (inline styles, escopos desnecessários)
+- **Workflow estruturado** - Especificação → Planejamento → Implementação → Testes
+- **Geração de código correta** - Sempre usa `@forge/react` (UI Kit 2), nunca React padrão
 
 ---
 
-## �� Para quem é?
+## Para quem é?
 
-### ✅ Ideal se você:
+### Ideal se você:
 - Usa **GitHub Copilot** e quer aumentar qualidade do código Forge
 - Quer **documentação como fonte da verdade** (não código desatualizado)
 - Precisa de **rastreabilidade** de decisões técnicas
 - Quer que IA gere código **seguindo boas práticas** automaticamente
 
-### ⚠️ Talvez não seja ideal se:
+### Talvez não seja ideal se:
 - Não usa GitHub Copilot (toolkit depende dele)
 - Prefere codificar direto sem planejamento
 - Projeto muito pequeno (overhead pode não compensar)
 
 ---
 
-## 🚀 Instalação
+## Instalação
 
 ### Pré-requisitos
 - Python 3.8+
@@ -59,7 +59,7 @@ pip install git+https://github.com/4-youtest/forge-sdd-toolkit.git
 
 ---
 
-## 📦 Configurar em um Projeto
+## Configurar em um Projeto
 
 ```bash
 # No diretório do seu projeto Forge (ou diretório vazio)
@@ -85,9 +85,9 @@ seu-projeto/
 
 ---
 
-## 🎮 Como Usar
+## Como Usar
 
-### 1️⃣ Criar Especificação (IDEATE)
+### Passo 1: Criar Especificação (IDEATE)
 
 **No GitHub Copilot Chat:**
 
@@ -102,7 +102,7 @@ seu-projeto/
 
 ---
 
-### 2️⃣ Planejar Implementação (PLAN)
+### Passo 2: Planejar Implementação (PLAN)
 
 ```
 /forge-plan
@@ -115,7 +115,7 @@ seu-projeto/
 
 ---
 
-### 3️⃣ Implementar Código (IMPLEMENT)
+### Passo 3: Implementar Código (IMPLEMENT)
 
 ```
 /forge-implement
@@ -130,7 +130,7 @@ seu-projeto/
 
 ---
 
-### 4️⃣ Testar (TEST)
+### Passo 4: Testar (TEST)
 
 ```
 /forge-test
@@ -143,7 +143,7 @@ seu-projeto/
 
 ---
 
-## 🎨 Exemplo de Workflow
+## Exemplo de Workflow
 
 ```bash
 # 1. Instalar toolkit
@@ -165,7 +165,7 @@ forge-sdd init --here
 
 ---
 
-## 🧠 O que o Copilot aprende?
+## O que o Copilot aprende?
 
 ### Regras Aplicadas Automaticamente
 
@@ -181,7 +181,7 @@ forge-sdd init --here
 
 ---
 
-## 🔄 Atualizar
+## Atualizar
 
 ```bash
 # Via uv
@@ -193,7 +193,7 @@ pip install --upgrade git+https://github.com/4-youtest/forge-sdd-toolkit.git
 
 ---
 
-## 🗑️ Desinstalar
+## Desinstalar
 
 ### Remover CLI
 
@@ -214,16 +214,16 @@ rm -rf .github/copilot-instructions.md .github/prompts/ forge-sdd/
 
 ---
 
-## 📚 Documentação
+## Documentação
 
-- [📖 Guia de Instalação](docs/INSTALL.md) - Detalhes sobre instalação e configuração
-- [🔌 Opções de Integração](docs/INTEGRATION-OPTIONS.md) - Diferentes formas de usar o toolkit
-- [🧪 Como Testar](docs/INSTALL-TEST.md) - Validar instalação em projetos de teste
-- [🐛 Troubleshooting](docs/TROUBLESHOOTING.md) - Problemas comuns e soluções
+- [Guia de Instalação](docs/INSTALL.md) - Detalhes sobre instalação e configuração
+- [Opções de Integração](docs/INTEGRATION-OPTIONS.md) - Diferentes formas de usar o toolkit
+- [Como Testar](docs/INSTALL-TEST.md) - Validar instalação em projetos de teste
+- [Troubleshooting](docs/TROUBLESHOOTING.md) - Problemas comuns e soluções
 
 ---
 
-## 🤝 Contribuir
+## Contribuir
 
 Contribuições são bem-vindas! Este projeto é open source sob licença MIT.
 
@@ -238,13 +238,13 @@ cd forge-sdd-toolkit
 
 ---
 
-## 📄 Licença
+## Licença
 
 MIT License - veja [LICENSE](LICENSE) para detalhes.
 
 ---
 
-## 🙋 Suporte
+## Suporte
 
 - **Issues:** [GitHub Issues](https://github.com/4-youtest/forge-sdd-toolkit/issues)
 - **Discussões:** [GitHub Discussions](https://github.com/4-youtest/forge-sdd-toolkit/discussions)
@@ -253,8 +253,8 @@ MIT License - veja [LICENSE](LICENSE) para detalhes.
 
 <div align="center">
 
-**Feito com ❤️ para desenvolvedores Atlassian Forge**
+**Feito para desenvolvedores Atlassian Forge**
 
-[⭐ Star no GitHub](https://github.com/4-youtest/forge-sdd-toolkit) | [📖 Documentação](docs/) | [🐛 Reportar Bug](https://github.com/4-youtest/forge-sdd-toolkit/issues)
+[Star no GitHub](https://github.com/4-youtest/forge-sdd-toolkit) | [Documentação](docs/) | [Reportar Bug](https://github.com/4-youtest/forge-sdd-toolkit/issues)
 
 </div>
