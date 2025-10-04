@@ -221,8 +221,36 @@ def is_forge_project(path: Path) -> bool:
 
 
 def get_toolkit_root() -> Path:
-    """Get the root directory of the toolkit (where this script is located)"""
-    return Path(__file__).parent
+    """Get the root directory of the toolkit (where resource files are located)
+    
+    When running from source: returns the directory containing this file
+    When installed via pip/uv: searches for the actual repository root
+    """
+    # Get directory of this module
+    module_dir = Path(__file__).parent
+    
+    # Check if we're in the source repository (has .git, README.md, etc.)
+    if (module_dir / ".github").exists() and (module_dir / "prompts").exists():
+        return module_dir
+    
+    # If installed via pip/uv, files are in site-packages alongside this module
+    # The MANIFEST.in should have copied them there
+    if (module_dir / ".github").exists():
+        return module_dir
+        
+    # Last resort: try to find the repo root by walking up
+    current = module_dir
+    for _ in range(5):  # Don't go too far up
+        if (current / ".github").exists() and (current / "prompts").exists():
+            return current
+        current = current.parent
+    
+    # If nothing found, return module dir and let the error happen downstream
+    console.print(f"[yellow]Warning: Could not find toolkit resources. Searched in:[/yellow]")
+    console.print(f"  - {module_dir}")
+    console.print(f"  - Parent directories up to {current}")
+    return module_dir
+
 
 
 def copy_toolkit_structure(project_path: Path, tracker: Optional[StepTracker] = None) -> dict:
