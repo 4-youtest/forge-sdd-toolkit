@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "forge-sdd-toolkit"
-version = "1.0.0"
+version = "1.0.1"
 description = "Toolkit para desenvolvimento orientado por especificações em Atlassian Forge"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -49,14 +49,13 @@ Issues = "https://github.com/4-youtest/forge-sdd-toolkit/issues"
 [project.scripts]
 forge-sdd = "forge_sdd_cli:main"
 
-[tool.hatch.build.targets.wheel]
-packages = ["."]
-include = [
-    "forge_sdd_cli.py",
-    "prompts/*.md",
+[tool.setuptools]
+py-modules = ["forge_sdd_cli"]
+
+[tool.setuptools.package-data]
+"*" = [
+    ".github/**/*",
+    "prompts/**/*",
     "scripts/**/*",
-    "templates/*.md",
-    "docs/*.md",
-    "README.md",
-    "LICENSE",
+    "templates/**/*",
 ]
