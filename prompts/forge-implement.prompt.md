@@ -1,22 +1,7 @@
 ---
 description: Implementar funcionalidade seguindo o plano técnico para Atlassian Forge
----
-
-## 📚 Contexto Necessário
-
-**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
-
-1. 📄 **`forge-sdd/templates/manifest-structures.md`** - Estruturas obrigatórias do manifest.yml e templates
-2. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
-
-**Após identificar a feature atual, carregue também:**
-
-3. 📄 **`forge-sdd/specs/[feature]/implementation-plan.md`** - Plano técnico detalhado
-4. 📄 **`forge-sdd/specs/[feature]/feature-spec.md`** - Especificação original (contexto)
-5. 📄 **`forge-sdd/specs/[feature]/manifest-updates.md`** - Atualizações necessárias no manifest
-
-Aguarde o carregamento completo antes de prosseguir.
-
+context:
+  - forge-sdd/templates/manifest-structures.md
 ---
 
 A entrada do usuário pode incluir contexto adicional ou módulos específicos para implementar.
@@ -26,6 +11,27 @@ Entrada do usuário:
 $ARGUMENTS
 
 O usuário está solicitando a implementação de uma funcionalidade baseada no plano técnico existente.
+
+## PASSO 0: Carregar Contexto da Feature
+
+**OBRIGATÓRIO:** Antes de qualquer ação, identifique e carregue os arquivos da feature atual:
+
+1. **Listar features disponíveis:**
+   ```bash
+   ls -1 forge-sdd/specs/
+   ```
+
+2. **Identificar feature mais recente** (maior número) ou perguntar ao usuário qual implementar
+
+3. **Carregar arquivos da feature usando #file:**
+   - `#file:forge-sdd/specs/[###-feature-name]/implementation-plan.md` - OBRIGATÓRIO
+   - `#file:forge-sdd/specs/[###-feature-name]/feature-spec.md` - Para contexto
+   - `#file:forge-sdd/specs/[###-feature-name]/manifest-updates.md` - Se existir
+   - `#file:manifest.yml` - Se existir (validar estrutura atual)
+
+4. **Aguarde o carregamento completo** antes de prosseguir para o Passo 1
+
+---
 
 ## ⚠️ IMPORTANTE: Verificar Estado do Projeto
 

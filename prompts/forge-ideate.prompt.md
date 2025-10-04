@@ -1,18 +1,11 @@
 ---
 description: Criar ou atualizar a especificação de funcionalidade a partir de uma descrição em linguagem natural.
+context:
+  - forge-sdd/templates/ideate-template.md
+  - forge-sdd/templates/manifest-structures.md
 scripts:
   sh: forge-sdd/scripts/bash/create-new-feature.sh --json "{ARGS}"
 ---
-
-## 📚 Contexto Necessário
-
-**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
-
-1. 📄 **`forge-sdd/templates/ideate-template.md`** - Estrutura obrigatória da especificação de funcionalidade
-2. 📄 **`forge-sdd/templates/manifest-structures.md`** - Referência de módulos Forge e templates disponíveis
-3. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
-
-Aguarde o carregamento completo destes arquivos antes de prosseguir com as instruções abaixo.
 
 ---
 

@@ -1,22 +1,11 @@
 ---
 description: Transformar especificação de funcionalidade em plano técnico de implementação para Atlassian Forge
+context:
+  - forge-sdd/templates/plan-template.md
+  - forge-sdd/templates/manifest-structures.md
 scripts:
   sh: forge-sdd/scripts/bash/create-implementation-plan.sh --json "{ARGS}"
 ---
-
-## 📚 Contexto Necessário
-
-**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
-
-1. 📄 **`forge-sdd/templates/plan-template.md`** - Estrutura obrigatória do plano técnico
-2. 📄 **`forge-sdd/templates/manifest-structures.md`** - Estruturas obrigatórias do manifest.yml e catálogo de templates
-3. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
-
-**Após executar o script (passo 1), carregue também:**
-
-4. 📄 **Feature spec** (path retornado pelo script) - Requisitos da funcionalidade
-
-Aguarde o carregamento completo antes de prosseguir.
 
 ---
 

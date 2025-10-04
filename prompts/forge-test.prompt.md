@@ -1,21 +1,7 @@
 ---
 description: Testar funcionalidade implementada em Atlassian Forge
----
-
-## 📚 Contexto Necessário
-
-**ANTES de executar qualquer ação, carregue automaticamente estes arquivos de referência:**
-
-1. 📄 **`.github/copilot-instructions.md`** - Regras técnicas do Atlassian Forge (carregado automaticamente)
-
-**Identifique a feature atual e carregue:**
-
-2. 📄 **`forge-sdd/specs/[feature]/implementation-plan.md`** - Plano técnico para validar implementação
-3. 📄 **`forge-sdd/specs/[feature]/feature-spec.md`** - Especificação para validar critérios de aceite
-4. 📄 **`manifest.yml`** - Configuração do app para validar módulos e permissões
-
-Aguarde o carregamento completo antes de prosseguir.
-
+context:
+  - manifest.yml
 ---
 
 A entrada do usuário pode especificar a feature ou módulos específicos para testar.
@@ -25,6 +11,25 @@ Entrada do usuário:
 $ARGUMENTS
 
 O usuário está solicitando testes da implementação. Isso inclui validação local, testes de integração e preparação para deploy.
+
+## PASSO 0: Carregar Contexto da Feature
+
+**OBRIGATÓRIO:** Antes de qualquer ação, identifique e carregue os arquivos da feature atual:
+
+1. **Listar features disponíveis:**
+   ```bash
+   ls -1 forge-sdd/specs/
+   ```
+
+2. **Identificar feature mais recente** (maior número) ou perguntar ao usuário qual testar
+
+3. **Carregar arquivos da feature usando #file:**
+   - `#file:forge-sdd/specs/[###-feature-name]/implementation-plan.md` - Para validar implementação
+   - `#file:forge-sdd/specs/[###-feature-name]/feature-spec.md` - Para validar critérios de aceite
+
+4. **Aguarde o carregamento completo** antes de prosseguir
+
+---
 
 Para testar a implementação, faça o seguinte:
 
