@@ -2,7 +2,7 @@ include README.md
 include LICENSE
 include forge_sdd_cli.py
 
-recursive-include .github *
+recursive-include ai-agents *
 recursive-include prompts *.md
 recursive-include scripts *
 recursive-include templates *.md

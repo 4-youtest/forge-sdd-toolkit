@@ -168,6 +168,58 @@ def show_banner():
     console.print()
 
 
+def select_ai_agent() -> str:
+    """Prompt user to select their AI agent
+    
+    Returns:
+        str: The selected agent identifier ('github-copilot', 'cursor', 'windsurf', etc.)
+    """
+    agents = {
+        "1": {
+            "id": "github-copilot",
+            "name": "GitHub Copilot",
+            "status": "✅ Supported",
+            "config_file": "copilot-instructions.md",
+            "target_path": ".github/copilot-instructions.md"
+        },
+        # Future agents will be added here
+        # "2": {
+        #     "id": "cursor",
+        #     "name": "Cursor AI",
+        #     "status": "🚧 Coming Soon",
+        #     "config_file": "cursor-rules.md",
+        #     "target_path": ".cursorrules"
+        # },
+        # "3": {
+        #     "id": "windsurf",
+        #     "name": "Windsurf AI",
+        #     "status": "🚧 Coming Soon",
+        #     "config_file": "windsurf-config.md",
+        #     "target_path": ".windsurf/config.md"
+        # },
+    }
+    
+    console.print("\n[cyan bold]Select your AI coding assistant:[/cyan bold]\n")
+    
+    for key, agent in agents.items():
+        console.print(f"  [{key}] {agent['name']:<20} {agent['status']}")
+    
+    console.print()
+    
+    # For now, only option 1 is available
+    # In future, we'll add actual input prompt: choice = typer.prompt("Enter choice", default="1")
+    choice = "1"
+    
+    if choice not in agents:
+        console.print("[red]Invalid choice, defaulting to GitHub Copilot[/red]")
+        choice = "1"
+    
+    selected = agents[choice]
+    console.print(f"[green]✓[/green] Selected: [cyan]{selected['name']}[/cyan]\n")
+    
+    return selected["id"]
+
+
 @app.callback()
 def callback(ctx: typer.Context):
     """Show banner when no subcommand is provided"""
@@ -229,8 +281,8 @@ def get_toolkit_root() -> Path:
     # Get directory of this module
     module_dir = Path(__file__).parent
     
-    # Check if we're in the source repository (has .git, README.md, etc.)
-    if (module_dir / ".github").exists() and (module_dir / "prompts").exists():
+    # Check if we're in the source repository (has ai-agents, prompts, etc.)
+    if (module_dir / "ai-agents").exists() and (module_dir / "prompts").exists():
         return module_dir
     
     # When installed via pip/uv with setuptools data-files,
@@ -240,14 +292,14 @@ def get_toolkit_root() -> Path:
         return data_dir
     
     # If installed via pip/uv with MANIFEST.in, files might be alongside module
-    if (module_dir / ".github").exists():
+    if (module_dir / "ai-agents").exists():
         return module_dir
         
     # Last resort: try to find the repo root by walking up
     current = module_dir
     search_paths = [str(module_dir)]
     for _ in range(5):  # Don't go too far up
-        if (current / ".github").exists() and (current / "prompts").exists():
+        if (current / "ai-agents").exists() and (current / "prompts").exists():
             return current
         if (current / "forge_sdd_toolkit_data").exists():
             return current / "forge_sdd_toolkit_data"
@@ -262,50 +314,53 @@ def get_toolkit_root() -> Path:
 
 
 
-def copy_toolkit_structure(project_path: Path, tracker: Optional[StepTracker] = None) -> dict:
-    """Copy toolkit structure to project"""
+def copy_toolkit_structure(project_path: Path, ai_agent: str = "github-copilot", tracker: Optional[StepTracker] = None) -> dict:
+    """Copy toolkit structure to project
+    
+    Args:
+        project_path: Target project path
+        ai_agent: Selected AI agent identifier (e.g., 'github-copilot', 'cursor', 'windsurf')
+        tracker: Optional progress tracker
+    """
     toolkit_root = get_toolkit_root()
     stats = {"files": 0, "dirs": 0}
 
-    # Copy .github directory (without prompts first)
-    github_source = toolkit_root / ".github"
-    github_dest = project_path / ".github"
-
-    if github_source.exists():
-        if github_dest.exists():
-            # Only remove if we're going to replace it
-            # But preserve existing prompts directory
-            existing_prompts = github_dest / "prompts"
-            has_existing_prompts = existing_prompts.exists()
-
-            if has_existing_prompts:
-                # Backup existing prompts temporarily
-                import tempfile
-                with tempfile.TemporaryDirectory() as tmpdir:
-                    temp_prompts = Path(tmpdir) / "prompts"
-                    shutil.copytree(existing_prompts, temp_prompts)
-
-                    # Remove .github and recreate
-                    shutil.rmtree(github_dest)
-                    shutil.copytree(github_source, github_dest,
-                                  ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
-
-                    # Restore prompts
-                    github_prompts = github_dest / "prompts"
-                    if github_prompts.exists():
-                        shutil.rmtree(github_prompts)
-                    shutil.copytree(temp_prompts, github_prompts)
-            else:
-                # No existing prompts, just replace
-                shutil.rmtree(github_dest)
-                shutil.copytree(github_source, github_dest,
-                              ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
-        else:
-            shutil.copytree(github_source, github_dest,
-                          ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
-
-        stats["dirs"] += 1
-        stats["files"] += sum(1 for _ in github_dest.rglob('*') if _.is_file())
+    # Copy AI agent configuration file to appropriate location
+    ai_agents_source = toolkit_root / "ai-agents" / ai_agent
+    
+    if ai_agents_source.exists():
+        # Map agent to their target paths
+        agent_targets = {
+            "github-copilot": {
+                "source_file": "copilot-instructions.md",
+                "target_dir": ".github",
+                "target_file": "copilot-instructions.md"
+            },
+            # Future agents will be mapped here
+            # "cursor": {
+            #     "source_file": "cursor-rules.md",
+            #     "target_dir": ".",
+            #     "target_file": ".cursorrules"
+            # },
+            # "windsurf": {
+            #     "source_file": "windsurf-config.md",
+            #     "target_dir": ".windsurf",
+            #     "target_file": "config.md"
+            # },
+        }
+        
+        if ai_agent in agent_targets:
+            target_config = agent_targets[ai_agent]
+            source_file = ai_agents_source / target_config["source_file"]
+            target_dir = project_path / target_config["target_dir"]
+            target_file = target_dir / target_config["target_file"]
+            
+            if source_file.exists():
+                target_dir.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source_file, target_file)
+                stats["files"] += 1
+                if not (project_path / target_config["target_dir"]).exists():
+                    stats["dirs"] += 1
 
     # Now copy prompts from prompts/ to .github/prompts/
     prompts_source = toolkit_root / "prompts"
@@ -541,6 +596,9 @@ def init(
     ]
     console.print(Panel("\n".join(setup_lines), border_style="cyan", padding=(1, 2)))
 
+    # Select AI agent
+    ai_agent = select_ai_agent()
+
     # Check for required tools
     should_init_git = False
     if not no_git:
@@ -567,7 +625,7 @@ def init(
         try:
             # Copy toolkit structure
             tracker.start("toolkit")
-            stats = copy_toolkit_structure(project_path, tracker)
+            stats = copy_toolkit_structure(project_path, ai_agent, tracker)
             tracker.complete("toolkit", f"{stats['files']} files in {stats['dirs']} directories")
 
             # Create forge-specs directory
